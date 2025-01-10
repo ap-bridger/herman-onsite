@@ -1,5 +1,5 @@
 import { createSchema, createYoga } from "graphql-yoga";
-import {file, pendingTransactions} from "@/server/modules/file/api";
+import {file} from "@/server/modules/file/api";
 import {greetings} from "@/server/modules/greet/api";
 
 const { handleRequest } = createYoga({
@@ -27,7 +27,6 @@ const { handleRequest } = createYoga({
       },
       Mutation: {
           file,
-          pendingTransactions,
         },
       },
   }),
