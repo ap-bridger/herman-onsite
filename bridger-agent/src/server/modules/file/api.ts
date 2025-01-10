@@ -1,10 +1,9 @@
-import { prisma } from "@/lib/db";
-import { base64 } from "base-64";
+import { prisma } from "@/lib/db"
 
 export const file = async (_: any, args: {contents: string}) => {
-  // const decodedContents = base64.decode(contents);
 
-  console.log("contents: " + args.contents)
+  const decodedContents = Buffer.from( args.contents, "base64").toString("utf-8")
+  console.log("contents: " + decodedContents)
 
   // await prisma.file.create({
   //   data: {
