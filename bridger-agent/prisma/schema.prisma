@@ -10,3 +10,35 @@ datasource db {
 model Greet {
   id Int @id @default(autoincrement())
 }
+
+model File {
+  id Int @id @default(autoincrement())
+  type String
+  name String @unique
+  createdAt DateTime @default(now())
+}
+
+model HistoricalTransactions {
+  id Int @id @default(autoincrement())
+  date DateTime
+  payee String
+  accountCategory String
+}
+
+model PendingTransactions {
+  id Int @id @default(autoincrement())
+  date DateTime
+  description String
+  payee String
+  accountCategory String
+  spent Int
+  received Int
+}
+
+
+// historical transactions
+// Date,Ref No.,Payee,Memo,Payment,Deposit,Reconciliation Status,Balance,Type,Account,Added in Banking
+// date, payee, account
+
+// pending categorization
+// Date,DESCRIPTION,Payee,Categorize or match,SPENT,RECEIVED
