@@ -1,5 +1,5 @@
-import { prisma } from "@/lib/db"
-import { parse } from "fast-csv";
+import {prisma} from "@/lib/db"
+import {parse} from "fast-csv";
 import moment from "moment";
 
 export const file = async (_: any, args: {contents: string}) => {
@@ -22,11 +22,11 @@ export const file = async (_: any, args: {contents: string}) => {
   stream.write(decodedContents);
   stream.end();
 
-  return await pendingTransactions();
+  return pendingTransactions();
 };
 
 export const pendingTransactions = async () => {
-  prisma.pendingTransactions.findMany()
+  return prisma.pendingTransactions.findMany();
 }
 
 export const vendors = async () => {
