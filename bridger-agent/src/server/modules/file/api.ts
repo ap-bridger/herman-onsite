@@ -22,5 +22,15 @@ export const file = async (_: any, args: {contents: string}) => {
   stream.write(decodedContents);
   stream.end();
 
-  return "";
+  return await pendingTransactions();
 };
+
+export const pendingTransactions = async () => {
+  prisma.pendingTransactions.findMany()
+}
+
+export const vendors = async () => {
+  prisma.pendingTransactions.findMany({
+    distinct: "payee"
+  })
+}

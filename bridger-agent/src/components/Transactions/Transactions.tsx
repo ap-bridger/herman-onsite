@@ -15,7 +15,7 @@ export const Transactions = () => {
     const file = files[0];
     const reader = new FileReader();
     reader.onload = async () => {
-      runMutation({
+      await runMutation({
         variables: {
           contents: String(reader.result).slice(CSV_PREFIX.length)
         },
@@ -31,7 +31,7 @@ export const Transactions = () => {
     const file = files[0];
     const reader = new FileReader();
     reader.onload = async () => {
-      runMutation({
+     await runMutation({
         variables: {
           contents: String(reader.result).slice(CSV_PREFIX.length)
         },
