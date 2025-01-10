@@ -7,8 +7,8 @@ export const file = async (_: any, args: {contents: string}) => {
   const decodedContents = Buffer.from( args.contents, "base64").toString("utf-8")
   // console.log("contents: " + decodedContents)
 
-  const stream = parse({ headers: ['date', 'description', 'payee', 'category', 'spent', 'received'], renameHeaders: true }).on('data',  row => {
-    prisma.pendingTransactions.create({
+  const stream = await parse({ headers: ['date', 'description', 'payee', 'category', 'spent', 'received'], renameHeaders: true }).on('data',  async row => {
+    await prisma.pendingTransactions.create({
       data: {
         date: moment(row.date, "mm/dd/yyyy").toISOString(),
         description: row.description,
