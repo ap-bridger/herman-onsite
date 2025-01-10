@@ -6,7 +6,7 @@ import {useMutation} from "@apollo/client";
 
 const CSV_PREFIX = "data:text/csv;base64,";
 export const Transactions = () => {
-  const [runMutation] = useMutation(FILE);
+  const [runMutation, {data}] = useMutation(FILE);
   const onHistoricalFile = (
     value: ChangeEvent<HTMLInputElement> | undefined
   ) => {
@@ -39,52 +39,21 @@ export const Transactions = () => {
     };
     reader.readAsDataURL(file);
   };
-  const rows = [
-    [
-      "01/01/2024",
-      "$100.00",
-      "Some description",
-      ["Amazon", "Google", "Apple"],
-      ["Sales", "Marketing", "Payroll"],
-    ],
-    [
-      "01/01/2024",
-      "$100.00",
-      "Some description",
-      ["Amazon", "Google", "Apple"],
-      ["Sales", "Marketing", "Payroll"],
-    ],
-    [
-      "01/01/2024",
-      "$100.00",
-      "Some description",
-      ["Amazon", "Google", "Apple"],
-      ["Sales", "Marketing", "Payroll"],
-    ],
-  ].map((row, index) => {
+  const rows = (data?.file || []).map((transaction, index) => {
     const style = { padding: "10px" };
     return (
       <tr key={index}>
-        <td style={style}>{row[0]}</td>
-        <td style={style}>{row[1]}</td>
-        <td style={style}>{row[2]}</td>
-        <td style={style}>
-          <select>
-            <option value={row[3][0]}>{row[3][0]}</option>
-            <option value={row[3][1]}>{row[3][1]}</option>
-            <option value={row[3][2]}>{row[3][2]}</option>
-          </select>
-        </td>
-        <td style={style}>
-          <select>
-            <option value={row[4][0]}>{row[4][0]}</option>
-            <option value={row[4][1]}>{row[4][1]}</option>
-            <option value={row[4][2]}>{row[4][2]}</option>
-          </select>
-        </td>
+        <td style={style}>{transaction.id}</td>
+        <td style={style}>{transaction.date}</td>
+        <td style={style}>{transaction.description}</td>
+        <td style={style}>{transaction.payee}</td>
+        <td style={style}>{transaction.accountDescription}</td>
+        <td style={style}>{transaction.spent}</td>
+        <td style={style}>{transaction.recieved}</td>
       </tr>
     );
   });
+
   return (
     <>
       <p>Historical file:</p>
@@ -94,11 +63,13 @@ export const Transactions = () => {
       <table>
         <thead>
           <tr>
+            <th>ID</th>
             <th>Date</th>
-            <th>Amount</th>
             <th>Description</th>
             <th>Payee</th>
-            <th>Category</th>
+            <th>Account Category</th>
+            <th>Spent</th>
+            <th>Received</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>
