@@ -28,11 +28,11 @@ model HistoricalTransactions {
 model PendingTransactions {
   id Int @id @default(autoincrement())
   date DateTime
-  description String
+  description String?
   payee String
   accountCategory String
-  spent Int
-  received Int
+  spent Int?
+  received Int?
 }
 
 
