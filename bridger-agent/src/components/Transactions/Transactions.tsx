@@ -1,9 +1,12 @@
 "use client";
 
 import { ChangeEvent } from "react";
+import {FILE} from "@/components/Transactions/Transactions.api";
+import {useMutation} from "@apollo/client";
 
 const CSV_PREFIX = "data:text/csv;base64,";
 export const Transactions = () => {
+  const [runMutation] = useMutation(FILE);
   const onHistoricalFile = (
     value: ChangeEvent<HTMLInputElement> | undefined
   ) => {
@@ -12,7 +15,11 @@ export const Transactions = () => {
     const file = files[0];
     const reader = new FileReader();
     reader.onload = async () => {
-      console.log(String(reader.result).slice(CSV_PREFIX.length));
+      runMutation({
+        variables: {
+          contents: String(reader.result).slice(CSV_PREFIX.length)
+        },
+      })
     };
     reader.readAsDataURL(file);
   };
@@ -24,7 +31,11 @@ export const Transactions = () => {
     const file = files[0];
     const reader = new FileReader();
     reader.onload = async () => {
-      console.log(String(reader.result).slice(CSV_PREFIX.length));
+      runMutation({
+        variables: {
+          contents: String(reader.result).slice(CSV_PREFIX.length)
+        },
+      })
     };
     reader.readAsDataURL(file);
   };

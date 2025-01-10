@@ -1,5 +1,6 @@
-import { greetings } from "@/server/modules/greet/api";
 import { createSchema, createYoga } from "graphql-yoga";
+import {file} from "@/server/modules/file/api";
+import {greetings} from "@/server/modules/greet/api";
 
 const { handleRequest } = createYoga({
   schema: createSchema({
@@ -7,12 +8,18 @@ const { handleRequest } = createYoga({
       type Query {
         greetings: String
       }
+      type Mutation {
+        file(contents: String!): String
+      }
     `,
     resolvers: {
       Query: {
         greetings,
       },
-    },
+      Mutation: {
+          file
+        },
+      },
   }),
 
   // While using Next.js file convention for routing, we need to configure Yoga to use the correct endpoint
